@@ -5,7 +5,7 @@
   * реализация пакетом ```biblatex``` через движок ```biber``` (рекомендуемая) при поддержке шаблонов пакета [```biblatex-gost```](http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-gost/doc/biblatex-gost.pdf).
 * Лучше всего всегда обрамлять значение BibTeX-атрибутов в фигурные скобки или кавычки (то есть вместо *month = jul* писать *month = {jul}*).
 * Также лучше всегда указывать язык BibTeX-записи (например, *language = {russian}* или *language = {english}*). Запись языков всегда должна вестись строчными (маленькими) буквами.
-* Для оптимального оформления списка литературы стоит убедиться, что исходный *.bib файл заполнен правильным образом.
+* Для оптимального оформленфия списка литературы стоит убедиться, что исходный *.bib файл заполнен правильным образом.
 Примеры заполнения записей и результаты применения к ним основных стилей приведены в [описании стилей пакета ```gost```](http://ctan.org/tex-archive/biblio/bibtex/contrib/gost) и в [примерах применения пакета ```biblatex-gost```](http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-gost/doc/biblatex-gost-examples.pdf).
 
 
