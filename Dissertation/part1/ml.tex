@@ -24,7 +24,7 @@
 Чтобы отразить суть биологических нейронных систем, искусственный нейрон строится следующим образом. Он получает входные сигналы (исходные данные либо выходные сигналы других нейронов нейронной сети) через несколько входных каналов. Каждый входной сигнал проходит через соединение, имеющее определенный вес. С каждым нейроном связано определенное пороговое значение. Вычисляется взвешенная сумма входов, из нее вычитается пороговое значение и в результате получается величина активации нейрона . Сигнал активации преобразуется с помощью функции активации и в результате получается выходной сигнал нейрона.
 На Рис.\ref{neuron} приведен пример искусственного нейрона.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics [width=\textwidth*2/3] {images/neuron.png}
     \caption{Искусственный нейрон}
@@ -35,13 +35,66 @@ $x_i$ - входной сигнал
 $w_i$ - вес входного сигнала $f(*)$- функция активации
 
 \subsubsection{Функции активации}
-В данном разделе описаны используемые в работе функций активаций для нейонных сетей.
+В данном разделе описаны используемые в работе функций активаций для нейронных сетей.
 \begin{itemize}
-    \item Сигмоидная: $f(x) = \dfrac{1}{1-e^{-x}}$
+    \item Сигмоидная: $f(x) = \dfrac{1}{1-e^{-x}}$, см. график \ref{fig:sigm}
+        \begin{figure} [ht]
+            \centering
+            \begin{tikzpicture}[declare function={sigma(\x)=1/(1+exp(-\x));
+                sigmap(\x)=sigma(\x)*(1-sigma(\x));}]
+                \begin{axis}
+                [
+                    grid=major,     
+                    xmin=-6,
+                    xmax=6,
+                    axis x line=bottom,
+                    ytick={0,.5,1},
+                    ymax=1,
+                    axis y line=middle,
+                    samples=100,
+                    domain=-6:6,
+                    legend style={at={(1,0.9)}},   
+                    line width = 0.8
+                ]
+                    \addplot[blue,mark=none]   (x,{sigma(x)});
+                \end{axis}
+               
+            \end{tikzpicture}
+            \caption{График сигмоидной функции активации}
+            \label{fig:sigm}
+        \end{figure}
     \item Линейная: $f(x) = x$
-    \item Положительно линейная (ReLU): $f(x) = max(0, x)$
-    \item  Софтмакс (Softmax): $f(x)j = \dfrac{e^{s_j}}{\sum^K_{k=1}e^{s_k}}$, для $j = 1, .., K$
+    \item Положительно линейная (ReLU): $f(x) = max(0, x)$, см график \ref{fig:relu}
+        \begin{figure} [ht]
+            \centering
+            \begin{tikzpicture}[thick,font=\footnotesize]
+                \begin{axis}
+                [
+                    grid=major,     
+                    xmin=-2,
+                    xmax=2,
+                    axis x line=bottom,
+                    ytick={0,.5,1, 1.5, 2},
+                    ymax=2,
+                    axis y line=middle,
+                    samples=100,
+                    domain=-4:4,
+                    legend style={at={(1,0.9)}},
+                    line width = 0.8
+                ]
+                    \addplot[ color=blue,domain=-4:0,samples=100] plot (\x,{(0)});
+                    \addplot[ color=blue,domain=0:4, samples=100] plot (\x,{(\x)});
+                \end{axis}
+            \end{tikzpicture}
+            \caption{График функции активации ReLU}
+            \label{fig:relu}
+        \end{figure}    
+    \item Софтмакс (Softmax): $f(x)j = \dfrac{e^{s_j}}{\sum^K_{k=1}e^{s_k}}$, для $j = 1, .., K$
 \end{itemize}
+
+    
+
+
 
 \subsubsection{Функция потерь}
 Введем обозначения: $X$— множество описаний объектов, $Y$ — множество допустимых ответов. Предполагается, что существует неизвестная целевая зависимость — отображение $y* : X \rightarrow Y$ , значения которой известны только на объектах конечной обучающей выборки 
@@ -73,7 +126,7 @@ L(y, y^*(x_i)) = -\sum^K_{j=1}y^*_{ij} \log y_{ij}
 В сверточном слое нейроны, которые используют одни и те же веса, объединяются в карты признаков (feature maps), а каждый нейрон карты признаков связан с частью нейронов предыдущего слоя. При вычислении сети получается, что каждый нейрон выполняет свертку некоторой области предыдущего слоя (определяемой множеством нейронов, связанных с данным нейроном).
 
 Пример архитектуры сверточной нейронной сети представлен на Рис. \ref{fig:convnet}.
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics [width=\textwidth*2/3] {images/convnet.png}
     \caption{ Архитектура сверточной нейронной сети}
@@ -83,7 +136,7 @@ L(y, y^*(x_i)) = -\sum^K_{j=1}y^*_{ij} \log y_{ij}
 \subsubsection{Полносвязный слой} \label{fc_layers}
 Слой в котором каждый нейрон соединен со всеми нейронами на предыдущем уровне, причем каждая связь имеет свой весовой коэффициент. На Рис.\ref{fig:fc_layer} показан пример полносвязного слоя.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics [width=\textwidth*2/3] {images/fc_layer.png}
     \caption{Полносвязный слой}
@@ -101,7 +154,7 @@ L(y, y^*(x_i)) = -\sum^K_{j=1}y^*_{ij} \log y_{ij}
 Еще одна особенность свёрточного слоя в том, что он немного уменьшает изображение за счет краевых эффектов.
 
 На Рис. \ref{fig:conv_layer} показан пример сверточного слоя с ядром свертки размера $3 \times 3$.
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics [width=\textwidth*2/3] {images/conv_layer.png}
     \caption{Сверточный слой}
@@ -112,7 +165,7 @@ L(y, y^*(x_i)) = -\sum^K_{j=1}y^*_{ij} \log y_{ij}
 Слои этого типа выполняют уменьшение размерности (обычно в несколько раз). Это можно делать разными способами, но зачастую используется метод выбора максимального элемента (max-pooling) — вся карта признаков разделяется на ячейки, из которых выбираются максимальные по значению.
 
 На Рис. \ref{fig:pooling_layer} показан пример субдискретизирующего слоя с методом выбора максимального элемента.
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics [width=\textwidth*2/3] {images/pooling_layer.png}
     \caption{Cубдискретизирующий слой}
@@ -137,7 +190,7 @@ Dropout регуляризация заключается в изменении 
 
 Авторы ResNet в статье описали, что нельзя. Скорее всего, более глубокая нейросеть покажет даже худшие результаты как при обучении, так и при тестировании. И это будет не из-за переобучения, поскольку тогда тренировочная ошибка была бы низкой, см Рис \ref{fig:train_error_deep_net}.
 
-\begin{figure} [h]
+\begin{figure} [ht]
     \centering
     \includegraphics[width=\textwidth*2/3]{images/train_error_deep_net.png}
     \caption{Ошибка на обучающей и тестовой выборке у сети с 20 слоями и 56 слоями}
@@ -179,7 +232,7 @@ Dropout регуляризация заключается в изменении 
 
 Сгруппированная свертка - это вариант свертки, при котором каналы карты входных признаков сгруппированы, а свертка выполняется независимо для каждого сгруппированного канала. Её пример можно увидеть на рисунке \ref{fig:gconv}.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth*2/3]{images/gconv.png}
     \caption{Сгруппированная свёртка на 5 слоях}
@@ -188,7 +241,7 @@ Dropout регуляризация заключается в изменении 
 
 По сравнению с обычной свёрткой, на рисунке \ref{fig:normal_conv}, можно увидеть что на группированной свёртке слои, разбиваются на две группы, и количество перемножений разительно падает.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth*2/3]{images/normal_conv.png}
     \caption{Обычная свёртка на 5 слоях}
@@ -219,7 +272,7 @@ Dropout регуляризация заключается в изменении 
 
 Когда количество групп свёртки совпадает с количеством слоёв в исходном изображении, такую свёртку называют depthwise convolution или послойная свёртка. Рис \ref{fig:depthwise_conv}.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth*2/3]{images/depthwise_conv.png}
     \caption{Послойная свёртка}
