@@ -83,8 +83,8 @@
         variable,vector,Version,vi,warning,warnings,weighted,weights,%
         which,while,window,write,\%x\%,x11,X11,xedit,xemacs,xinch,xor,%
         xpdrows,xy,xyinch,yinch,zapsmall,zip},%
-    otherkeywords={!,!=,~,$,*,\%,\&,\%/\%,\%*\%,\%\%,<-,<<-},%
-    alsoother={._$},%
+    otherkeywords={!,!=,~,\$,*,\%,\&,\%/\%,\%*\%,\%\%,<-,<<-},%
+    alsoother={._\$},%
     sensitive,%
     morecomment=[l]\#,%
     morestring=[d]",%
@@ -271,13 +271,6 @@
 }
 \makeatother
 
-% значок С++ — используйте команду \cpp
-\newcommand{\cpp}{%
-    C\nolinebreak\hspace{-.05em}%
-    \raisebox{.2ex}{+}\nolinebreak\hspace{-.10em}%
-    \raisebox{.2ex}{+}%
-}
-
 
 %%% Русская традиция начертания математических знаков
 %\renewcommand{\le}{\ensuremath{\leqslant}}
@@ -319,7 +312,21 @@
 %\renewcommand{\omega}{\upomega}
 
 % Точки в оглавлении
-\renewcommand{\cftdot}{}
+\renewcommand{\cftdot}{.}
 
 % полуторный интервал
 \renewcommand{\baselinestretch}{1.5} 
+
+
+\AtBeginEnvironment{figure}{\addvspace{5mm}}
+
+\newenvironment{conditions}
+  {\par\vspace{\abovedisplayskip}\indent\begin{tabular}{>{$}l<{$} @{${} - {}$} l}}
+  {\end{tabular}\par\vspace{\belowdisplayskip}}
+
+%% значения в таблицах по центру в tabularx
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+
+% Оглавление размером 16
+\renewcommand\cftchapfont{16pt, \bfseries}
